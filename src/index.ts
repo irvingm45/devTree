@@ -9,7 +9,7 @@ const port = process.env.PORT || 4000;
 
 // Routing
 app.get('/', (req, res) => {
-	res.send('Hola mundo en Express');
+	res.send('Hola mundo en Express con TypeScript');
 });
 
 app.get('/ecommerce', (req, res) => {
