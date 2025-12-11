@@ -93,3 +93,33 @@ Para usar TypeScript en un proyecto (por ejemplo, con Express), se necesita un a
 -   **`sourceMap`**: Genera archivos `.map` que permiten depurar el código TypeScript original en lugar del JavaScript compilado.
 -   **`declaration`**: Genera archivos de declaración de tipos (`.d.ts`) junto con el JavaScript. Esto es útil si estás creando una librería.
 -   **`moduleResolution`**: Define cómo el compilador busca los módulos. `"node"` es la estrategia más común para proyectos de Node.js.
+
+ Para hacer funcionar dicho archivo, se necesita especificar como script el `tsc` el cual nos sirve para compilar el proyecto con TypeScript. Normalmente se especifica en el comando `build`
+___
+ `build` no es un comando reservado de npm, pero es una convención ampliamente adoptada en la comunidad de desarrollo para indicar que el script se encarga de compilar o construir el proyecto.
+___
+
+### Scripts en `package.json`
+
+Para compilar el proyecto TypeScript, como se ya se había dicho antes, se puedede agregar un script en el `package.json`:
+
+```json
+"scripts": {
+  "build": "tsc"
+}
+```
+Para correr el proyecto podemos hacerlo de dos formas:
+* Ejecutarlo como desarrollo con `ts-node` y `nodemon`:
+```json
+"scripts": {
+  "dev": "nodemon --exec ts-node src/index.ts"
+}
+```
+* Ejecutarlo en producción compilando primero y luego corriendo el JavaScript resultante:
+```json
+"scripts": {
+  "build": "tsc",
+  "start": "node dist/index.js"
+}
+```
+En pocas palabras, con `npm run dev` ejecutamos el proyecto en modo desarrollo, y con `npm start` ejecutamos el proyecto en modo producción pero habiendolo compilador previamente. 
