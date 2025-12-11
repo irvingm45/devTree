@@ -1,10 +1,11 @@
 // Archivo para configurar el servidor y las rutas
 import express from 'express';
+// Importamos el router
+import router from './router';
 const app = express();
 
-//Routing
-app.get('/', (req, res) => {
-    res.send('Hola mundo en Express con TypeScript');
-});
+// use nos permite usar middlewares
+// Middleware es una función que se ejecuta antes de llegar a las rutas
+app.use('/', router);
 
 export default app

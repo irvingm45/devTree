@@ -3,7 +3,7 @@
 Este documento resume conceptos clave para trabajar con Node.js, incluyendo la gestión de paquetes con `npm`, el uso de dependencias y la configuración de un entorno de desarrollo con TypeScript.
 
 ## Estructura del `package.json`
-
+---
 El archivo `package.json` es el corazón de cualquier proyecto de Node.js. Contiene metadatos sobre el proyecto y gestiona las dependencias y los scripts.
 
 -   **`name`**: El nombre de tu proyecto.
@@ -28,7 +28,7 @@ El archivo `package.json` es el corazón de cualquier proyecto de Node.js. Conti
 -   **`devDependencies`**: Paquetes que solo se necesitan durante el desarrollo y las pruebas (por ejemplo, `nodemon`, `typescript`, `@types/node`).
 
 ## Puntos Generales de Desarrollo
-
+---
 ### Dependencias de Desarrollo vs. Producción
 
 En un proyecto de Node.js, existen dos tipos principales de dependencias:
@@ -55,6 +55,7 @@ npm install -D <nombre_del_paquete>
 -   **Modo "Watch" con Nodemon**: Durante el desarrollo, es tedioso tener que reiniciar manualmente el servidor con cada cambio en el código. `nodemon` es una herramienta que automatiza este proceso, reiniciando la aplicación cada vez que detecta un cambio en los archivos. Se configura típicamente en los `scripts` del `package.json`.
 
 ## TypeScript en Proyectos de Node.js
+---
 
 **TypeScript (TS)** es un superconjunto de JavaScript (JS) que añade tipado estático opcional. Esto significa que cualquier código JavaScript válido también es código TypeScript válido. La principal ventaja de TS es que permite definir tipos para variables, parámetros de funciones y valores de retorno, lo que ayuda a detectar errores en tiempo de compilación en lugar de en ejecución.
 
@@ -123,3 +124,49 @@ Para correr el proyecto podemos hacerlo de dos formas:
 }
 ```
 En pocas palabras, con `npm run dev` ejecutamos el proyecto en modo desarrollo, y con `npm start` ejecutamos el proyecto en modo producción pero habiendolo compilador previamente. 
+
+## Configuración de Rutas en Express con TypeScript
+---
+
+Un router es un módulo que permite organizar las rutas de una aplicación en diferentes archivos o módulos. Esto es especialmente útil en aplicaciones grandes donde tener todas las rutas en un solo archivo puede volverse inmanejable.
+
+Básicamente, el router ayuda a enlistar las rutas y sus controladores asociados que manejan las solicitudes HTTP (GET, POST, PUT, DELETE, etc.) para esas rutas específicas.
+
+La sintaxis básica para crear un router en Express con TypeScript es la siguiente:
+
+```typescript
+import { Router, Request, Response } from 'express';
+const router = Router();
+// Definir rutas
+router.get('/', (req: Request, res: Response) => {
+    res.send('Hola desde el router!');
+});
+export default router;
+```
+Lo que hicimos fue primero importar `Router`, `Request` y `Response` desde el paquete `express`. Luego, creamos una instancia del router usando `Router()`. Después, definimos una ruta GET para la raíz (`'/'`) que responde con un mensaje simple. Finalmente, exportamos el router para poder usarlo en otras partes de la aplicación.
+
+La sintaxis de *export* e *import* inicia con alguna de dichas palabras, seguido de la entidad que se quiere exportar o importar con la palabra *default* si es que se quiere exportar o importar como predeterminada. En caso de que no sea así, se usan llaves `{}` para especificar qué entidades se quieren importar o exportar.
+> Con predeterminado se refiere a que solo hay una entidad que se exporta o importa del archivo.
+
+## Integración del Router en el Servidor Principal
+---
+Para integrar el router en el servidor principal de Express, primero debes importarlo y luego usarlo
+con el método `app.use()`. Aquí tienes un ejemplo de cómo hacerlo:
+
+```typescript
+import express from 'express';
+import router from './router'; // Asegúrate de que la ruta sea correcta
+const app = express();
+app.use('/', router);
+export default app;
+```
+
+Debemos usar el método `app.use()` para montar el router en la aplicación Express. En este caso, todas las rutas definidas en el router estarán disponibles bajo la ruta raíz (`'/'`). Si quisieras montar el router bajo una ruta específica, podrías hacerlo así:
+
+```typescript
+app.use('/api', router);
+```
+En este caso, todas las rutas definidas en el router estarán disponibles bajo la ruta `/api`. Por ejemplo, si el router tiene una ruta GET para `'/'`, ahora estaría accesible en `/api/`.
+
+> El método `app.use()` recibe dos parámetros: la ruta base y el router que se va a usar para manejar las solicitudes a esa ruta.
+
