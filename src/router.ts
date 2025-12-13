@@ -2,19 +2,12 @@ import { Router } from 'express';
 
 const router = Router();
 
-//Routing
-router.get('/', (req, res) => {
-    res.send('Hola mundo en Express desde router');
-});
+// Authentication and registration routes
+// Instead of using 'get', we use 'post' for better security
+router.post('/auth/register', (req, res) => {
+    console.log('From Register');
 
-//Routing
-router.get('/nosotros', (req, res) => {
-    res.send('Nosotros');
-});
-
-//Routing
-router.get('/blog', (req, res) => {
-    res.send('Blog');
+    console.log(req.body);
 });
 
 export default router;

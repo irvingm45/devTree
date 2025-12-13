@@ -37,8 +37,6 @@
 - **ts-node**: Ejecuta TypeScript directamente sin compilar a archivos .js (útil en desarrollo).
 - **tsc**: Compilador de TypeScript (convierte .ts a .js en `outDir`).
 
----
-
 - **process.env**: Objeto de Node.js que contiene variables de entorno (ej.: `process.env.PORT`). Se usan para configurar la app sin cambiar código.
 - **dotenv / .env**: Paquete y archivo para cargar variables de entorno en desarrollo (`require('dotenv').config()`).
 - **server.listen(port)**: Método que inicia el servidor y lo hace escuchar en el puerto dado.
@@ -47,3 +45,5 @@
 - **Logger (console / morgan / winston)**: Registro de eventos; `console.log` es simple, `morgan`/`winston` se usan en producción.
 - **Input validation**: Validación de datos entrantes (ej.: `express-validator`, `joi`) para prevenir errores y ataques.
 - **Error handling middleware**: Middleware con firma `(err, req, res, next)` para manejar errores centralizados.
+- **ORM**: Object-Relational Mapping; herramienta para interactuar con bases de datos usando objetos (ej.: Sequelize, TypeORM).
+- **ODM**: Object-Document Mapping; similar al ORM pero para bases de datos NoSQL (ej.: Mongoose para MongoDB).

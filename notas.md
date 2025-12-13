@@ -224,14 +224,6 @@ app.post('/users', (req, res) => {
 });
 ```
 
-### ¿POST crea elementos en el DOM?
-
-No. POST es solo una petición HTTP entre cliente y servidor. Lo que crea o modifica elementos en el DOM es el código que corre en el navegador (JavaScript) cuando recibe la respuesta del servidor. Un flujo típico:
-
-1. El cliente hace `POST` con `fetch` o un `<form>`.
-2. El servidor procesa la petición y responde (HTML, JSON, redirect, etc.).
-3. El cliente (si es una SPA o tiene JS) usa la respuesta para actualizar el DOM.
-
 ### Ejemplos prácticos
 
 - GET con `curl`:
@@ -293,4 +285,49 @@ Por defecto el navegador enviará el body como `application/x-www-form-urlencode
 - `404 Not Found` → recurso no encontrado.
 - `500 Internal Server Error` → error en servidor.
 
+# Peticiones HTTP con Express y TypeScript
 ---
+
+Para manejar peticiones HTTP que tienen un cuerpo (body) hecho en JSON en un servidor Express con TypeScript, es necesario utilizar middleware que pueda interpretar el cuerpo de la petición y convertirlo en un objeto accesible desde `req.body`.
+
+Este middleware es `express.json()`, que viene incluido con Express. La configuración de este middleware es bastante sencilla:
+
+```typescript
+import express, { Request, Response } from 'express';
+const app = express();
+// Middleware para parsear JSON en el body
+app.use(express.json());
+app.post('/data', (req: Request, res: Response) => {
+    const data = req.body; // Aquí accedemos al cuerpo de la petición
+    res.status(200).json({ received: data });
+});
+```
+En este ejemplo todo se conjunta en un solo script pero normalmente la parte de `express.json()` se coloca en el archivo principal del servidor mientras que las rutas se definen en los archivos routing.
+
+> Vease la parte de [router.ts](notas.md#configuración-de-rutas-en-express-con-typescript) para más detalles.
+
+
+# ORM y Bases de Datos
+---
+Un ORM (Object-Relational Mapping) es una técnica que se utiliza donde los datos de una base de datos son trataos como Objetos, utilizando un paradigma de POO.
+
+Esto permite que:
+* El código interactúe con una base de datos.
+* La velocidad de desarrollo aumente.
+* Seguridad en las consultas al sanitizar los datos.
+
+Ejemplo:
+```SQL
+INSERT INTO 'users' ('name') VALUES('Juan');
+```
+En ORM se vería así:
+```typescript
+Users.create({name:'Juan'});
+```
+Prácticamente, el ORM es código nativo de JS.
+
+## MongoDB y Mongoose
+MongoDB es una base de datos NoSQL que almacena datos en documentos JSON. MongoDB es muy flexible y escalable, lo que la hace popular para aplicaciones modernas.
+Mongoose es un ODM (Object Data Modeling) para MongoDB y Node.js.
+La diferencia entre ORM y ODM es que el primero se usa para bases de datos relacionales (SQL) y el segundo para bases de datos NoSQL.
+En Mongoose defines esquemas y modelos para tus datos, lo que facilita la interacción con MongoDB desde tu aplicación Node.js.
