@@ -47,3 +47,5 @@
 - **Error handling middleware**: Middleware con firma `(err, req, res, next)` para manejar errores centralizados.
 - **ORM**: Object-Relational Mapping; herramienta para interactuar con bases de datos usando objetos (ej.: Sequelize, TypeORM).
 - **ODM**: Object-Document Mapping; similar al ORM pero para bases de datos NoSQL (ej.: Mongoose para MongoDB).
+- **Mongoose**: ODM popular para MongoDB en Node.js; define esquemas y modelos para documentos. Lo usamos en este proyecto para gestionar la base de datos.
+- **dotenv** : Paquete para cargar variables de entorno desde un archivo `.env` en `process.env`. Necesario para que Mongooose soporte variables de entorno.

@@ -331,3 +331,38 @@ MongoDB es una base de datos NoSQL que almacena datos en documentos JSON. MongoD
 Mongoose es un ODM (Object Data Modeling) para MongoDB y Node.js.
 La diferencia entre ORM y ODM es que el primero se usa para bases de datos relacionales (SQL) y el segundo para bases de datos NoSQL.
 En Mongoose defines esquemas y modelos para tus datos, lo que facilita la interacción con MongoDB desde tu aplicación Node.js.
+
+## Variables de entorno
+Las variables de entorno son valores que cambian según el entorno en el que se ejecuta la aplicación (desarrollo, producción, etc.). Se utilizan para configurar aspectos como puertos, URLs de bases de datos, claves secretas, entre otros.
+Un ejemplo sencillo que hemos estado usando en el proyecto, es el puerto local en el que corre el servidor (4000), el cual es una variable de desarrollo.
+```typescript
+const port = 4000;
+```
+Sin embargo, en producción, el puerto puede ser diferente y no queremos cambiar el código cada vez que despleguemos la aplicación. Aquí es donde las variables de entorno son útiles. En el código de nuestro proyecto ya hemos usado `process.env.PORT` para obtener el puerto desde las variables de entorno:
+```typescript
+const port = process.env.PORT || 4000;
+```
+Una varible de entorno importante, es la URL de conexión a la base de datos (MongoDB) porque si nosotros ponemos la URL directamente en el código, estaríamos exponiendo información sensible como el usuario y la contraseña de la base de datos. En su lugar, podemos usar una variable de entorno para almacenar esta información de manera segura.
+
+Las variables de entorno se colocan en un archivo de nombre `.env` en la raíz del proyecto, donde cada variable en el archivo, será nombrada enteramente con mayúsculas. Por ejemplo:
+```MONGO_URI=mongodb+srv://usuario:contraseña```
+
+> Node.js soporta variables de entorno con el archivo `.env` pero en cambio nodemon no lo hace, por lo que es necesario usar el paquete `dotenv` para cargar las variables de entorno desde el archivo `.env` en el entorno de desarrollo.
+
+### Uso de `dotenv` para cargar variables de entorno
+Para usar `dotenv`, primero debes instalarlo como una dependencia de desarrollo:
+```bash
+# En caso de que quieras instalarlo como dependencia de desarrollo
+npm i dotenv
+# En caso de que quieras instalarlo como dependencia de producción
+npm i -D dotenv
+# equivalente a...
+npm i dotenv --save-dev
+```
+
+Luego, en el archivo principal de tu aplicación (por ejemplo, `src/index.ts` o `src/server.ts`), debes importar y configurar `dotenv` al inicio del archivo:
+```typescript
+import dotenv from 'dotenv';
+// Cargar variables de entorno desde el archivo .env
+dotenv.config();
+```
