@@ -14,3 +14,15 @@ const port = process.env.PORT || 4000;
 server.listen(port, () => {
 	console.log(colors.bgWhite.green.bold('Server running on port: '), port);
 });
+
+type Product = {
+	id: number;
+	price: number;
+	name: string;
+}
+
+let product1 : Product = {
+	id: 1,
+	price: 100,
+	name: 'Tablet'
+}
