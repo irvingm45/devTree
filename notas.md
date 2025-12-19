@@ -387,3 +387,19 @@ const hashPassword = async (password: string): Promise<string> => {
 };
 ```
 En este ejemplo, la función `hashPassword` toma una contraseña como entrada, genera un *salt* con 10 rondas de complejidad, y luego hashea la contraseña junto con el *salt*. El resultado es el hash de la contraseña que puedes almacenar de manera segura en la base de datos.
+
+# Handler
+---
+Un *handler* no es mas que un nombre de usuario procesado para que no haya problema en las peticiones HTTP. Generalmente se usa en las rutas de usuarios para identificar a un usuario en específico. Por ejemplo, si un usuario se llama "Irvin López", su *handle* podría ser "irvinlopez" o "irvin_lopez", dependiendo de las reglas que se quieran aplicar. El *handle* debe ser único para cada usuario y no debe contener espacios ni caracteres especiales.
+Para hacer *handlers* únicos, podemos ocupar una dependencia llamada `slugify` que nos ayuda a convertir un nombre en un *handle* válido. Para instalar `slugify`, puedes usar el siguiente comando:
+```bash
+npm install slugify
+```
+Luego, puedes usar `slugify` para generar un *handle* a partir del nombre del usuario:
+```typescript
+import slugify from 'slugify';
+const generateHandle = (name: string): string => {
+    return slugify(name, { lower: true, strict: true });
+};
+```
+La función `generateHandle` toma un nombre como primer parámetro y como segundo parámetro, un objeto que le indica que el *handle* debe ser en minúsculas, sin espacios, sin caracteres especiales, etc. En este ejemplo se le indica que el *handle* debe ser en minúsculas y sin caracteres especiales.
