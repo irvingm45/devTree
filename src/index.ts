@@ -15,14 +15,19 @@ server.listen(port, () => {
 	console.log(colors.bgWhite.green.bold('Server running on port: '), port);
 });
 
-type Product = {
-	id: number;
-	price: number;
-	name: string;
+interface User {
+    id: number;
+    username: string;
+    email: string;
+    role: 'admin' | 'user';
 }
 
-let product1 : Product = {
-	id: 1,
-	price: 100,
-	name: 'Tablet'
+let newUser : User;
+
+type Product = {
+    id: number;
+    price: number;
+    name: string;
 }
+// Pick: Extrae ciertas propiedades de un type y crea un nuevo type
+type ProductPreview = Pick<Product, "id" | "name">;

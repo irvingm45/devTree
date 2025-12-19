@@ -1,5 +1,10 @@
-import mongoose, { model, Schema } from 'mongoose';
+import { model, Schema } from 'mongoose';
 
+export interface IUser {
+    name: string;
+    email: string;
+    password: string;
+}
 // Definicion del esquema de usuario
 const userSchema = new Schema({
     name: {
@@ -21,7 +26,7 @@ const userSchema = new Schema({
 })
 
 // Definición del modelo de usuario
-const User = model('User', userSchema);
+const User = model<IUser>('User', userSchema);
 export default User;
 
 // Ejemplo de creación de un usuario

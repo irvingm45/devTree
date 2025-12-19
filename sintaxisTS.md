@@ -117,6 +117,7 @@ type CategoryID = {
 ```
 Con esto podemos cambiar directamente el tipo de dato de una propiedad en otro interface sin tener que cambiarlo manualmente en ambos lados.
 
+Otra cosa importante, es que ambos solo existen en tiempo de compilación, es decir, no se valida en tiempo de ejecución, por lo que no generan código JS adicional.
 ### Diferencias
 Con los types podemos usar algo que se llama *Utility Types*, los cuales nos permiten extraer o modificar tipos de datos de una forma más sencilla. Algunos ejemplos son:
 ```typescript
@@ -142,3 +143,27 @@ interface User {
     email: string;
 } // Esta interface ahora tiene id, name y email
 ```
+
+# El peligro del tipo "any"
+---
+El tipo "any" desactiva la verificación de tipos en TS, lo que puede llevar a errores en tiempo de ejecución si no se usa con cuidado.
+Por ejemplo, si declaramos una variable como "any", podemos asignarle cualquier tipo de dato sin que TS nos avise:
+```typescript
+let data: any;
+data = 42; // number
+data = "Hello"; // string
+data = { name: "John" }; // object
+```
+Esto puede ser útil en algunas situaciones, pero también puede llevar a errores difíciles de detectar. Por ejemplo, si esperamos que una variable sea un número pero en realidad es una cadena, podemos tener problemas al intentar realizar operaciones matemáticas con ella. Otro ejemplo importante para evitar *any*, es cuando manejamos las respuestas y peticiones en Express:
+```typescript
+import { Request, Response } from 'express';
+const handler = (req: Request, res: Response) => {
+    const userId: any = req.params.id; // Usar 'any' aquí es peligroso
+    // Si userId no es un número, esto puede causar un error en tiempo de ejecución
+    const user = getUserById(userId); 
+    res.json(user);
+};
+```
+En este caso, si `req.params.id` no es del tipo esperado, podríamos tener problemas al intentar usar `userId` en funciones que esperan un número.
+Para evitar estos problemas, es mejor usar tipos más específicos siempre que sea posible, y solo recurrir a "any" cuando sea absolutamente necesario y estemos seguros de lo que estamos haciendo.
+
