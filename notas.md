@@ -366,3 +366,24 @@ import dotenv from 'dotenv';
 // Cargar variables de entorno desde el archivo .env
 dotenv.config();
 ```
+
+# Hashear contraseñas
+---
+Hashear contraseñas es bastante importante para la seguridad de los datos de los usuarios para evitar que las contraseñas sean robadas y usadas de manera maliciosa.
+Afortunadamente, existen dependencias que nos facilitan el trabajo de hashear porque de otra manera, tendríamos que hacerlo de manera manual con conocimientos de criptografía. En este proyecto, usamos la dependencia `bcrypt` para hashear contraseñas.
+Para instalar `bcrypt`, puedes usar el siguiente comando:
+```bash
+npm install bcrypt
+```
+Antes de hashear una contraseña, necesitamos conocer el término *Salt* (sal). El *salt* es un valor aleatorio que se añade a la contraseña antes de hashearla. Esto hace que incluso si dos usuarios tienen la misma contraseña, sus hashes serán diferentes debido al *salt* único. Entre mas salt tenga una contraseña, más segura será pero mas lenta de generar.
+
+Para hashear una contraseña con `bcrypt`, puedes usar el siguiente código de ejemplo:
+```typescript
+import bcrypt from 'bcrypt';
+const hashPassword = async (password: string): Promise<string> => {
+    const salt = await bcrypt.genSalt(10); // Genera un salt con 10 rondas
+    const hashedPassword = await bcrypt.hash(password, salt); // Hashea la contraseña con el salt
+    return hashedPassword;
+};
+```
+En este ejemplo, la función `hashPassword` toma una contraseña como entrada, genera un *salt* con 10 rondas de complejidad, y luego hashea la contraseña junto con el *salt*. El resultado es el hash de la contraseña que puedes almacenar de manera segura en la base de datos.

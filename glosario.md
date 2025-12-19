@@ -49,3 +49,5 @@
 - **ODM**: Object-Document Mapping; similar al ORM pero para bases de datos NoSQL (ej.: Mongoose para MongoDB).
 - **Mongoose**: ODM popular para MongoDB en Node.js; define esquemas y modelos para documentos. Lo usamos en este proyecto para gestionar la base de datos.
 - **dotenv** : Paquete para cargar variables de entorno desde un archivo `.env` en `process.env`. Necesario para que Mongooose soporte variables de entorno.
+- **await**: Palabra clave en JavaScript/TypeScript para esperar la resolución de una promesa de manera asíncrona dentro de funciones `async`.
+- **handle**: Función que procesa una petición HTTP en Express (también llamada "controller" o "route handler").
