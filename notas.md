@@ -403,3 +403,42 @@ const generateHandle = (name: string): string => {
 };
 ```
 La función `generateHandle` toma un nombre como primer parámetro y como segundo parámetro, un objeto que le indica que el *handle* debe ser en minúsculas, sin espacios, sin caracteres especiales, etc. En este ejemplo se le indica que el *handle* debe ser en minúsculas y sin caracteres especiales.
+
+# Validación de Datos
+---
+La validación de datos se refiere al proceso de verificar que los datos de entrada sean acordes a ciertos criterios antes de ser procesados o almacenados. Esto es crucial para mantener la integridad de los datos y prevenir errores o vulnerabilidades en la aplicación.
+Un ejemplo común de validación de datos es asegurarse de que un correo electrónico tenga el formato correcto antes de guardarlo en la base de datos. Otro ejemplo es verificar que una contraseña cumpla con ciertos requisitos de seguridad, como longitud mínima y uso de caracteres especiales.
+
+Para realizar validaciones en Express con TypeScript, podemos usar la dependencia `express-validator`. Esta biblioteca proporciona un conjunto de middlewares para validar y sanitizar datos de entrada en las rutas de Express.
+Para instalar `express-validator`, puedes usar el siguiente comando:
+```bash
+npm install express-validator
+```
+Luego, puedes usar `express-validator` en tus rutas para validar los datos de entrada. Aquí tienes un ejemplo de cómo validar un correo electrónico y una contraseña en una ruta de registro de usuario:
+
+```typescript
+// Importamos las funciones de express-validator
+import { body, validationResult } from 'express-validator';
+import express, { Request, Response } from 'express';
+const app = express();
+app.use(express.json());
+// Ruta de registro de usuario con validación
+app.post('/register',
+// Middlewares de validación
+[
+    // Validar que el email tenga formato correcto
+    body('email').isEmail().withMessage('El correo electrónico no es válido'),
+    // Validar que la contraseña tenga al menos 6 caracteres
+    body('password').isLength({ min: 6 }).withMessage('La contraseña debe tener al menos 6 caracteres')
+], // Al finalizar los middlewares de validación
+
+// Handler de la ruta
+(req: Request, res: Response) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        return res.status(400).json({ errors: errors.array() });
+    }
+    // Procesar el registro del usuario
+    res.status(201).json({ message: 'Usuario registrado exitosamente' });
+});
+```
