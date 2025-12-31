@@ -7,7 +7,8 @@ import { hashPassword } from "../utils/auth";
 const createAccount =  async (req : Request, res: Response) => {
 
     // Manejar errores
-    let errors = validationResult(req);
+    // validationResult extrae los errores de la solicitud
+    let errors = validationResult(req); // Extrae los errores de la solicitud
     if(!errors.isEmpty()) {
         return res.status(400).json({ errors: errors.array() })
     }
