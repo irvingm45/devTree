@@ -442,3 +442,14 @@ app.post('/register',
     res.status(201).json({ message: 'Usuario registrado exitosamente' });
 });
 ```
+
+# Los middlewares
+---
+Los middlewares son básciamente piezas de código que se ejecutan durante el ciclo de vida de una petición HTTP. Como su nombre lo indica, se ejecutan "en medio" del manejo de la petición, es decir, entre que el servidor recibe la petición y envía la respuesta.
+
+Algunos ejemplos muy comunes de middlewares son la autenticación de usuarios, verificar si un registro existe en una base de datos, compartir información de una entidad hacia otra, etc.
+
+Los middlewares se pueden clasificar en tres tipos principales:
+1. **Middlewares de aplicación**: Se aplican a todas las rutas de la aplicación. Una forma de identificarlos facilmente en Express, es que se usan con `app.use()`.
+2. **Middlewares de ruta**: Se aplican a rutas específicas. Estos los podemos identificar porque usan directamente la dirección de la ruta y normalmente vemos estos middlwares en los routers.
+3. **Middlewares de error**: Se usan para manejar errores en la aplicación

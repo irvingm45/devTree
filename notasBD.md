@@ -73,6 +73,8 @@ De esta manera, TypeScript nos proporcionará verificación de tipos y autocompl
 
 > Todo lo anterior lo podemos hacer de igual manera con types en lugar de interfaces
 
+No es necesario usar interfaces o types con mongoose, pero es una buena práctica para aprovechar las ventajas de TypeScript en cuanto a tipado y verificación de tipos.
+
 # Exportar e importar modelos e interfaces
 ---
 Cuando trabajamos con modelos e interfaces en mongoose, es una buena práctica exportarlos para poder usarlos en otras partes de nuestra aplicación.
@@ -129,3 +131,16 @@ En ambos ejemplos, se crean documentos en base al schema definido en `Auto`.
 ## Devolver respuestas
 Cuando devolvamos respuestas, siempre es importante devolver también el status code adecuado, como lo hicimos en el ejemplo anterior con `res.status(201).send(nuevoAuto);`. Esto ayuda a los clientes de la API a entender el resultado de su petición.
 Para saber más sobre los status codes, puedes revisar la siguiente [página](https://developer.mozilla.org/es/docs/Web/HTTP/Reference/Status)
+
+## Funciones que tienen los modelos de mongoose
+---
+Los modelos de mongoose tienen varias funciones integradas que nos permiten interactuar con la base de datos de manera sencilla. Algunas de las funciones más comunes son:
+- `create()`: Crea y guarda un nuevo documento en la base de datos.
+- `find()`: Busca documentos en la base de datos que coincidan con ciertos criterios.
+- `findById()`: Busca un documento por su ID.
+- `findOne()`: Busca un solo documento que coincida con ciertos criterios.
+- `updateOne()`: Actualiza un solo documento que coincida con ciertos criterios.
+- `deleteOne()`: Elimina un solo documento que coincida con ciertos criterios.
+Estas funciones nos permiten realizar operaciones CRUD (Crear, Leer, Actualizar, Eliminar) de manera sencilla y eficiente.
+
+> Para más información sobre las funciones de los modelos de mongoose, puedes revisar la documentación oficial [aquí](https://mongoosejs.com/docs/models.html).

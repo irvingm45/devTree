@@ -1,6 +1,7 @@
 import { Router } from 'express';
 import { body } from 'express-validator';
-import createAccount from './handlers';
+import createAccount, { login } from './handlers';
+import { handleInputErrors } from './middleware/validations';
 
 const router = Router();
 
@@ -21,7 +22,18 @@ router.post('/auth/register',
     body('password')
         .isLength({ min: 8 })
         .withMessage('Password must be at least 8 characters long'),
+    // Middleware to handle input errors
+    handleInputErrors,
     // We call the handler to create the account
     createAccount);
 
+router.post('/auth/login',
+    body('email')
+        .isEmail()
+        .withMessage('Invalid email address'),
+    body('password')
+        .notEmpty()
+        .withMessage('Password must not be empty'),
+    login
+)
 export default router;
