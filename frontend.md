@@ -127,3 +127,35 @@ La configuración está en `tailwind.config.js` y las directivas base se importa
 4.  `Router` mira la URL actual (ej. `/auth/login`).
 5.  Si coincide, renderiza `LoginView`.
 6.  `LoginView` devuelve el JSX (HTML) que el usuario ve.
+
+# ¿Qué es un fragment en React?
+---
+Un fragment en React se usa para agrupar múltiples elementos como "nav", "section", "footer", etc. Se utiliza para no añadir elementos innecesarios al DOM como lo puede ser un "div". Se usa comunmente para retornar un componente:
+```tsx
+export default function LoginView() {
+    return (
+        <>  <-- Esto es un fragment9
+            <div>LoginView</div>
+            <div>Otro elemento</div>
+        </>  <-- Aqui se cierra el fragment
+    )
+}
+```
+# Links en React Router
+---
+En React Router no podemos usar la etiqueta *a* cuando queremos redireccionar a otra ruta interna de la aplicación, ya que esto recarga toda la página y la vuelve ineficiente. Lo mejor es usar algo llamo *Link* que nos permite navegar entre rutas sin recargar la página. Un ejemplo de uso sería:
+```tsx
+import { Link } from 'react-router-dom';
+export default function LoginView() {
+    return (
+        <>
+            <div>LoginView</div>
+            <nav>
+                <Link to="/auth/register">
+                    ¿No tienes cuenta? Crea una aquí
+                </Link>
+            </nav>
+        </>
+    )
+}
+```
